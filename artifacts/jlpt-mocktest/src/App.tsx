@@ -20,7 +20,7 @@ const EXAM_FILES = [
   "N4_data.json",
 ];
 
-const EXAMS_VERSION = "v3";
+const EXAMS_VERSION = "v4";
 const VERSION_KEY = "jlpt_exams_version";
 
 function AppRouter({ exams }: { exams: Exam[] }) {

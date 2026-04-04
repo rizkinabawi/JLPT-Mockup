@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useLocation, useParams } from "wouter";
 import { Exam, Question, Section, UserAnswer } from "../types/exam";
 import { saveProgress, loadProgress, clearProgress, calculateResults } from "../lib/examStore";
@@ -147,6 +147,78 @@ export default function ExamPage({ exams }: ExamPageProps) {
 
   const progressPercent = (getTotalAnswered() / getTotalQuestions()) * 100;
 
+  function renderQuestionText(text: string): React.ReactNode {
+    const parts: React.ReactNode[] = [];
+    let i = 0;
+    let key = 0;
+
+    while (i < text.length) {
+      if (text[i] === '\n') {
+        parts.push(<br key={key++} />);
+        i++;
+      } else if (text.startsWith('（ ）', i) || text.startsWith('（　）', i)) {
+        const len = text.startsWith('（ ）', i) ? 3 : 3;
+        parts.push(
+          <span key={key++} className="inline-block mx-1 px-3 border-b-2 border-indigo-500 text-indigo-600 dark:text-indigo-400 font-bold min-w-[3rem] text-center">
+            ＿＿
+          </span>
+        );
+        i += len;
+      } else if (text.startsWith('( )', i)) {
+        parts.push(
+          <span key={key++} className="inline-block mx-1 px-3 border-b-2 border-indigo-500 text-indigo-600 dark:text-indigo-400 font-bold min-w-[3rem] text-center">
+            ＿＿
+          </span>
+        );
+        i += 3;
+      } else if (text[i] === '《') {
+        const end = text.indexOf('》', i);
+        if (end !== -1) {
+          const word = text.slice(i + 1, end);
+          parts.push(
+            <span key={key++} className="underline underline-offset-4 decoration-2 decoration-indigo-500 font-bold text-gray-900 dark:text-white">
+              {word}
+            </span>
+          );
+          i = end + 1;
+        } else {
+          parts.push(text[i]);
+          i++;
+        }
+      } else {
+        let j = i + 1;
+        while (j < text.length && text[j] !== '\n' && text[j] !== '《' && !text.startsWith('（ ）', j) && !text.startsWith('（　）', j) && !text.startsWith('( )', j)) {
+          j++;
+        }
+        parts.push(<span key={key++}>{text.slice(i, j)}</span>);
+        i = j;
+      }
+    }
+    return parts;
+  }
+
+  function getSectionInstruction(sectionName: string, hasMarkers: boolean): string {
+    const name = sectionName.toLowerCase();
+    if (name.includes('membaca kanji') || (name.includes('文字語彙') && !name.includes('pilihan'))) {
+      return hasMarkers
+        ? 'Pilih cara baca (furigana) yang benar untuk kata bergaris bawah dalam kalimat:'
+        : 'Pilih cara baca (furigana) yang benar untuk kata kanji yang ditanyakan dalam kalimat:';
+    }
+    if (name.includes('pilihan') || name.includes('kosakata') || name.includes('từ vựng')) {
+      return 'Pilih kata atau frasa yang paling tepat untuk melengkapi kalimat:';
+    }
+    if (name.includes('文法') || name.includes('tata bahasa') || name.includes('grammar')) {
+      return 'Pilih partikel atau bentuk kata yang paling tepat untuk mengisi bagian rumpang ( ＿＿ ):';
+    }
+    if (name.includes('読解') || name.includes('membaca') || name.includes('đọc hiểu')) {
+      return 'Baca teks di bawah ini, kemudian jawab pertanyaan yang diberikan:';
+    }
+    if (name.includes('nghe') || name.includes('mendengarkan') || name.includes('聴解')) {
+      return 'Dengarkan audio dan jawab pertanyaan:';
+    }
+    return 'Pilih jawaban yang paling tepat:';
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-[#0a0a0f] text-gray-900 dark:text-white flex flex-col">
       {/* Top Bar */}
@@ -217,23 +289,38 @@ export default function ExamPage({ exams }: ExamPageProps) {
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.15 }}
             >
+              {/* Section Instruction */}
+              {(() => {
+                const hasMarkers = !!currentQuestion?.question.includes('《');
+                return (
+                  <div className="flex items-start gap-2 mb-3 px-1">
+                    <span className="shrink-0 mt-0.5 w-4 h-4 rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center">
+                      <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                    </span>
+                    <p className="text-xs text-indigo-700 dark:text-indigo-400 font-medium leading-relaxed">
+                      {getSectionInstruction(currentSection.section_name, hasMarkers)}
+                    </p>
+                  </div>
+                );
+              })()}
+
               {/* Question Card */}
               <div className="bg-white dark:bg-white/[0.03] border border-gray-200 dark:border-white/8 rounded-2xl p-6 mb-4">
-                <div className="flex items-start justify-between mb-4">
+                <div className="flex items-start justify-between mb-5">
                   <div className="flex items-center gap-2">
-                    <span className="w-8 h-8 rounded-xl bg-indigo-600 flex items-center justify-center text-sm font-bold text-white">
+                    <span className="w-8 h-8 rounded-xl bg-indigo-600 flex items-center justify-center text-sm font-bold text-white shrink-0">
                       {currentQuestion?.number}
                     </span>
-                    <span className="text-xs text-gray-900 dark:text-gray-400 dark:text-white/30">
-                      Question {currentQuestionIdx + 1} of {currentSection.questions.length}
+                    <span className="text-xs text-gray-400 dark:text-white/30">
+                      Soal {currentQuestionIdx + 1} dari {currentSection.questions.length}
                     </span>
                   </div>
                   <button
                     onClick={toggleFlag}
                     className={`p-2 rounded-xl transition-colors ${
                       flagged.has(questionKey)
-                        ? "text-amber-400 bg-amber-950/30"
-                        : "text-gray-400 dark:text-white/30 hover:text-gray-500 dark:text-white/60"
+                        ? "text-amber-400 bg-amber-100 dark:bg-amber-950/30"
+                        : "text-gray-300 dark:text-white/30 hover:text-gray-500 dark:hover:text-white/60 hover:bg-gray-100 dark:hover:bg-white/5"
                     }`}
                   >
                     {flagged.has(questionKey) ? (
@@ -244,9 +331,15 @@ export default function ExamPage({ exams }: ExamPageProps) {
                   </button>
                 </div>
 
-                <p className="text-white text-xl leading-relaxed font-medium mb-2" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
-                  {currentQuestion?.question}
-                </p>
+                {/* Question text - strip leading "N. " number prefix since we show number badge */}
+                <div
+                  className="text-gray-900 dark:text-white text-lg leading-loose font-medium"
+                  style={{ fontFamily: "'Noto Sans JP', sans-serif" }}
+                >
+                  {currentQuestion && renderQuestionText(
+                    currentQuestion.question.replace(/^\d+\.\s*/, '')
+                  )}
+                </div>
               </div>
 
               {/* Answer Choices */}
