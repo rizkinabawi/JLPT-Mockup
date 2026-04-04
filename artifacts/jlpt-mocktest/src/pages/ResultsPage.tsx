@@ -46,9 +46,9 @@ export default function ResultsPage({ exams }: ResultsPageProps) {
 
   if (!exam || !result) {
     return (
-      <div className="min-h-screen bg-[#0a0a0f] flex items-center justify-center text-white">
+      <div className="min-h-screen bg-gray-50 dark:bg-[#0a0a0f] flex items-center justify-center text-gray-900 dark:text-white">
         <div className="text-center">
-          <p className="text-white/50 mb-4">Results not found</p>
+          <p className="text-gray-500 dark:text-white/50 mb-4">Results not found</p>
           <button
             onClick={() => navigate("/")}
             className="px-4 py-2 bg-indigo-600 rounded-xl text-sm"
@@ -90,19 +90,19 @@ export default function ResultsPage({ exams }: ResultsPageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-white pb-20">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#0a0a0f] text-gray-900 dark:text-white pb-20">
       {/* Header */}
-      <div className="sticky top-0 z-30 bg-[#0a0a0f]/95 backdrop-blur border-b border-white/5 px-4 py-3">
+      <div className="sticky top-0 z-30 bg-white/95 dark:bg-[#0a0a0f]/95 backdrop-blur border-b border-gray-200 dark:border-white/5 px-4 py-3">
         <div className="max-w-3xl mx-auto flex items-center gap-4">
           <button
             onClick={() => navigate("/")}
-            className="p-2 rounded-xl hover:bg-white/10 transition-colors text-white/60"
+            className="p-2 rounded-xl hover:bg-gray-200 dark:bg-white/10 transition-colors text-gray-900 dark:text-gray-500 dark:text-white/60"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
           <div>
-            <p className="text-xs text-white/40">Exam Results</p>
-            <h1 className="text-sm font-bold text-white">
+            <p className="text-xs text-gray-900 dark:text-gray-400 dark:text-white/40">Exam Results</p>
+            <h1 className="text-sm font-bold text-gray-900 dark:text-white">
               JLPT {exam.level} — Exam #{exam.exam_number}
             </h1>
           </div>
@@ -114,13 +114,13 @@ export default function ResultsPage({ exams }: ResultsPageProps) {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          className="relative bg-white/[0.03] border border-white/8 rounded-3xl p-8 mb-6 overflow-hidden text-center"
+          className="relative bg-white dark:bg-white/[0.03] border border-gray-200 dark:border-white/8 rounded-3xl p-8 mb-6 overflow-hidden text-center"
         >
           <div className={`absolute inset-0 bg-gradient-to-br ${getScoreBg(result.score)} opacity-10`} />
 
           <div className={`relative w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br ${getScoreBg(result.score)} flex items-center justify-center shadow-2xl`}>
             <div className="text-center">
-              <p className="text-4xl font-black text-white">{result.score}%</p>
+              <p className="text-4xl font-black text-gray-900 dark:text-white">{result.score}%</p>
             </div>
           </div>
 
@@ -137,38 +137,38 @@ export default function ResultsPage({ exams }: ResultsPageProps) {
             {getPassStatus(result.score) ? "PASSED" : "NEEDS IMPROVEMENT"}
           </div>
 
-          <p className="text-white/60 text-sm">{getScoreMessage(result.score)}</p>
+          <p className="text-gray-500 dark:text-white/60 text-sm">{getScoreMessage(result.score)}</p>
 
           {/* Stats */}
           <div className="grid grid-cols-3 gap-4 mt-8">
-            <div className="bg-white/5 rounded-2xl p-4">
-              <div className="flex items-center justify-center gap-1.5 text-white/40 text-xs mb-2">
+            <div className="bg-gray-100 dark:bg-white/5 rounded-2xl p-4">
+              <div className="flex items-center justify-center gap-1.5 text-gray-900 dark:text-gray-400 dark:text-white/40 text-xs mb-2">
                 <CheckCircle2 className="w-3.5 h-3.5" /> Correct
               </div>
               <p className="text-2xl font-bold text-emerald-400">{result.correctAnswers}</p>
-              <p className="text-xs text-white/30">of {result.totalQuestions}</p>
+              <p className="text-xs text-gray-900 dark:text-gray-400 dark:text-white/30">of {result.totalQuestions}</p>
             </div>
-            <div className="bg-white/5 rounded-2xl p-4">
-              <div className="flex items-center justify-center gap-1.5 text-white/40 text-xs mb-2">
+            <div className="bg-gray-100 dark:bg-white/5 rounded-2xl p-4">
+              <div className="flex items-center justify-center gap-1.5 text-gray-900 dark:text-gray-400 dark:text-white/40 text-xs mb-2">
                 <XCircle className="w-3.5 h-3.5" /> Wrong
               </div>
               <p className="text-2xl font-bold text-red-400">
                 {result.answeredQuestions - result.correctAnswers}
               </p>
-              <p className="text-xs text-white/30">answered</p>
+              <p className="text-xs text-gray-900 dark:text-gray-400 dark:text-white/30">answered</p>
             </div>
-            <div className="bg-white/5 rounded-2xl p-4">
-              <div className="flex items-center justify-center gap-1.5 text-white/40 text-xs mb-2">
+            <div className="bg-gray-100 dark:bg-white/5 rounded-2xl p-4">
+              <div className="flex items-center justify-center gap-1.5 text-gray-900 dark:text-gray-400 dark:text-white/40 text-xs mb-2">
                 <Clock className="w-3.5 h-3.5" /> Time
               </div>
-              <p className="text-xl font-bold text-white">{formatTime(result.timeTaken)}</p>
-              <p className="text-xs text-white/30">total</p>
+              <p className="text-xl font-bold text-gray-900 dark:text-white">{formatTime(result.timeTaken)}</p>
+              <p className="text-xs text-gray-900 dark:text-gray-400 dark:text-white/30">total</p>
             </div>
           </div>
         </motion.div>
 
         {/* Section Results */}
-        <h2 className="text-sm font-bold text-white/50 uppercase tracking-wider mb-4">
+        <h2 className="text-sm font-bold text-gray-900 dark:text-gray-500 dark:text-white/50 uppercase tracking-wider mb-4">
           Section Breakdown
         </h2>
 
@@ -182,18 +182,18 @@ export default function ResultsPage({ exams }: ResultsPageProps) {
                 key={sr.sectionId}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-white/[0.03] border border-white/8 rounded-2xl overflow-hidden"
+                className="bg-white dark:bg-white/[0.03] border border-gray-200 dark:border-white/8 rounded-2xl overflow-hidden"
               >
                 <button
                   onClick={() => setExpandedSection(isExpanded ? null : sr.sectionId)}
-                  className="w-full flex items-center gap-4 p-4 hover:bg-white/5 transition-colors"
+                  className="w-full flex items-center gap-4 p-4 hover:bg-gray-100 dark:bg-white/5 transition-colors"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-sm font-bold text-white/60 shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-gray-100 dark:bg-white/5 flex items-center justify-center text-sm font-bold text-gray-900 dark:text-gray-500 dark:text-white/60 shrink-0">
                     {sr.sectionId}
                   </div>
                   <div className="flex-1 min-w-0 text-left">
-                    <p className="text-sm font-medium text-white truncate">{sr.sectionName}</p>
-                    <p className="text-xs text-white/40">
+                    <p className="text-sm font-medium text-gray-900 dark:text-white truncate">{sr.sectionName}</p>
+                    <p className="text-xs text-gray-900 dark:text-gray-400 dark:text-white/40">
                       {sr.correctAnswers}/{sr.totalQuestions} correct
                     </p>
                   </div>
@@ -201,7 +201,7 @@ export default function ResultsPage({ exams }: ResultsPageProps) {
                     <span className={`text-lg font-bold ${getScoreColor(sr.score)}`}>
                       {sr.score}%
                     </span>
-                    <div className="w-4 h-4 text-white/30">
+                    <div className="w-4 h-4 text-gray-900 dark:text-gray-400 dark:text-white/30">
                       {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                     </div>
                   </div>
@@ -209,7 +209,7 @@ export default function ResultsPage({ exams }: ResultsPageProps) {
 
                 {/* Score bar */}
                 <div className="px-4 pb-3">
-                  <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                  <div className="h-1.5 bg-gray-100 dark:bg-white/5 rounded-full overflow-hidden">
                     <div
                       className={`h-full rounded-full bg-gradient-to-r ${getScoreBg(sr.score)} transition-all`}
                       style={{ width: `${sr.score}%` }}
@@ -219,7 +219,7 @@ export default function ResultsPage({ exams }: ResultsPageProps) {
 
                 {/* Expanded: Question Review */}
                 {isExpanded && section && (
-                  <div className="border-t border-white/5 p-4 space-y-4 max-h-96 overflow-y-auto">
+                  <div className="border-t border-gray-200 dark:border-white/5 p-4 space-y-4 max-h-96 overflow-y-auto">
                     {section.questions.map((q) => {
                       const key = `${section.section}-${q.number}`;
                       const answer = answers[key];
@@ -230,20 +230,20 @@ export default function ResultsPage({ exams }: ResultsPageProps) {
                       return (
                         <div key={q.number} className={`rounded-xl p-3 border ${
                           unanswered
-                            ? "border-white/5 bg-white/[0.02]"
+                            ? "border-gray-200 dark:border-white/5 bg-white/[0.02]"
                             : isCorrect
                             ? "border-emerald-900/50 bg-emerald-950/20"
                             : "border-red-900/50 bg-red-950/20"
                         }`}>
                           <div className="flex items-start gap-2 mb-2">
                             {unanswered ? (
-                              <Minus className="w-4 h-4 text-white/30 mt-0.5 shrink-0" />
+                              <Minus className="w-4 h-4 text-gray-900 dark:text-gray-400 dark:text-white/30 mt-0.5 shrink-0" />
                             ) : isCorrect ? (
                               <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />
                             ) : (
                               <XCircle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
                             )}
-                            <p className="text-sm text-white/80 leading-relaxed" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
+                            <p className="text-sm text-gray-900 dark:text-gray-700 dark:text-white/80 leading-relaxed" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
                               {q.question}
                             </p>
                           </div>
@@ -259,7 +259,7 @@ export default function ResultsPage({ exams }: ResultsPageProps) {
                                       ? "bg-emerald-900/40 text-emerald-300"
                                       : isSelected && !isCorrectChoice
                                       ? "bg-red-900/40 text-red-300"
-                                      : "text-white/30"
+                                      : "text-gray-400 dark:text-white/30"
                                   }`}
                                   style={{ fontFamily: "'Noto Sans JP', sans-serif" }}
                                 >
@@ -285,14 +285,14 @@ export default function ResultsPage({ exams }: ResultsPageProps) {
         <div className="flex gap-3">
           <button
             onClick={() => navigate(`/exam/${exam.level}/${exam.exam_number}`)}
-            className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-white/5 text-white/70 text-sm font-medium hover:bg-white/10 transition-colors"
+            className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-gray-100 dark:bg-white/5 text-gray-900 dark:text-gray-600 dark:text-white/70 text-sm font-medium hover:bg-gray-200 dark:bg-white/10 transition-colors"
           >
             <RotateCcw className="w-4 h-4" />
             Retake Exam
           </button>
           <button
             onClick={() => navigate("/")}
-            className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-medium hover:opacity-90 transition-opacity"
+            className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-gray-900 dark:text-white text-sm font-medium hover:opacity-90 transition-opacity"
           >
             <Trophy className="w-4 h-4" />
             Back to Exams

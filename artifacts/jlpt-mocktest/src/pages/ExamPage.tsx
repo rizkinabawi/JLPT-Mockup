@@ -58,7 +58,7 @@ export default function ExamPage({ exams }: ExamPageProps) {
 
   if (!exam) {
     return (
-      <div className="min-h-screen bg-[#0a0a0f] flex items-center justify-center text-white">
+      <div className="min-h-screen bg-gray-50 dark:bg-[#0a0a0f] flex items-center justify-center text-gray-900 dark:text-white">
         <div className="text-center">
           <AlertCircle className="w-12 h-12 text-red-400 mx-auto mb-4" />
           <h2 className="text-xl font-bold mb-2">Exam not found</h2>
@@ -148,13 +148,13 @@ export default function ExamPage({ exams }: ExamPageProps) {
   const progressPercent = (getTotalAnswered() / getTotalQuestions()) * 100;
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-white flex flex-col">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#0a0a0f] text-gray-900 dark:text-white flex flex-col">
       {/* Top Bar */}
-      <div className="sticky top-0 z-30 bg-[#0a0a0f]/95 backdrop-blur border-b border-white/5 px-4 py-3">
+      <div className="sticky top-0 z-30 bg-white/95 dark:bg-[#0a0a0f]/95 backdrop-blur border-b border-gray-200 dark:border-white/5 px-4 py-3">
         <div className="max-w-4xl mx-auto flex items-center gap-4">
           <button
             onClick={() => navigate("/")}
-            className="p-2 rounded-xl hover:bg-white/10 transition-colors text-white/60 hover:text-white"
+            className="p-2 rounded-xl hover:bg-gray-200 dark:bg-white/10 transition-colors text-gray-900 dark:text-gray-500 dark:text-white/60 hover:text-white"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
@@ -164,11 +164,11 @@ export default function ExamPage({ exams }: ExamPageProps) {
               <span className="text-xs font-bold text-indigo-400 bg-indigo-950/60 px-2 py-0.5 rounded-lg">
                 {exam.level} — Exam #{exam.exam_number}
               </span>
-              <span className="text-xs text-white/30 truncate hidden sm:block">
+              <span className="text-xs text-gray-900 dark:text-gray-400 dark:text-white/30 truncate hidden sm:block">
                 {currentSection.section_name}
               </span>
             </div>
-            <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
+            <div className="h-1.5 bg-gray-100 dark:bg-white/5 rounded-full overflow-hidden">
               <motion.div
                 className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full"
                 style={{ width: `${progressPercent}%` }}
@@ -178,11 +178,11 @@ export default function ExamPage({ exams }: ExamPageProps) {
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1.5 text-sm font-mono font-bold text-white/60">
+            <div className="flex items-center gap-1.5 text-sm font-mono font-bold text-gray-900 dark:text-gray-500 dark:text-white/60">
               <Clock className="w-4 h-4" />
               <span>{formatTime(elapsedTime)}</span>
             </div>
-            <div className="text-xs text-white/40">
+            <div className="text-xs text-gray-900 dark:text-gray-400 dark:text-white/40">
               {getTotalAnswered()}/{getTotalQuestions()}
             </div>
           </div>
@@ -201,7 +201,7 @@ export default function ExamPage({ exams }: ExamPageProps) {
                 className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${
                   idx === currentSectionIdx
                     ? "bg-indigo-600 text-white"
-                    : "bg-white/5 text-white/40 hover:bg-white/10 hover:text-white/70"
+                    : "bg-gray-100 dark:bg-white/5 text-gray-900 dark:text-gray-400 dark:text-white/40 hover:bg-gray-200 dark:bg-white/10 hover:text-gray-600 dark:text-white/70"
                 }`}
               >
                 Section {s.section}
@@ -218,13 +218,13 @@ export default function ExamPage({ exams }: ExamPageProps) {
               transition={{ duration: 0.15 }}
             >
               {/* Question Card */}
-              <div className="bg-white/[0.03] border border-white/8 rounded-2xl p-6 mb-4">
+              <div className="bg-white dark:bg-white/[0.03] border border-gray-200 dark:border-white/8 rounded-2xl p-6 mb-4">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center gap-2">
                     <span className="w-8 h-8 rounded-xl bg-indigo-600 flex items-center justify-center text-sm font-bold text-white">
                       {currentQuestion?.number}
                     </span>
-                    <span className="text-xs text-white/30">
+                    <span className="text-xs text-gray-900 dark:text-gray-400 dark:text-white/30">
                       Question {currentQuestionIdx + 1} of {currentSection.questions.length}
                     </span>
                   </div>
@@ -233,7 +233,7 @@ export default function ExamPage({ exams }: ExamPageProps) {
                     className={`p-2 rounded-xl transition-colors ${
                       flagged.has(questionKey)
                         ? "text-amber-400 bg-amber-950/30"
-                        : "text-white/30 hover:text-white/60"
+                        : "text-gray-400 dark:text-white/30 hover:text-gray-500 dark:text-white/60"
                     }`}
                   >
                     {flagged.has(questionKey) ? (
@@ -261,14 +261,14 @@ export default function ExamPage({ exams }: ExamPageProps) {
                         className={`w-full flex items-center gap-4 p-4 rounded-2xl border-2 text-left transition-all ${
                           selected
                             ? "border-indigo-500 bg-indigo-950/60 text-white"
-                            : "border-white/8 bg-white/[0.02] text-white/70 hover:border-white/20 hover:bg-white/[0.05] hover:text-white"
+                            : "border-gray-200 dark:border-white/8 bg-white/[0.02] text-gray-900 dark:text-gray-600 dark:text-white/70 hover:border-white/20 hover:bg-white/[0.05] hover:text-white"
                         }`}
                       >
                         <div
                           className={`w-9 h-9 rounded-xl flex items-center justify-center text-sm font-bold shrink-0 transition-colors ${
                             selected
-                              ? "bg-indigo-500 text-white"
-                              : "bg-white/10 text-white/50"
+                              ? "bg-indigo-500 text-gray-900 dark:text-white"
+                              : "bg-gray-200 dark:bg-white/10 text-gray-900 dark:text-gray-500 dark:text-white/50"
                           }`}
                         >
                           {key}
@@ -291,7 +291,7 @@ export default function ExamPage({ exams }: ExamPageProps) {
             <button
               onClick={handlePrev}
               disabled={isFirst}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 text-white/60 hover:bg-white/10 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all text-sm font-medium"
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gray-100 dark:bg-white/5 text-gray-900 dark:text-gray-500 dark:text-white/60 hover:bg-gray-200 dark:bg-white/10 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all text-sm font-medium"
             >
               <ChevronLeft className="w-4 h-4" />
               Previous
@@ -300,7 +300,7 @@ export default function ExamPage({ exams }: ExamPageProps) {
             {isLast ? (
               <button
                 onClick={() => setShowSubmitModal(true)}
-                className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-medium text-sm shadow-lg shadow-indigo-900/30 hover:opacity-90 transition-opacity"
+                className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-gray-900 dark:text-white font-medium text-sm shadow-lg shadow-indigo-900/30 hover:opacity-90 transition-opacity"
               >
                 <Flag className="w-4 h-4" />
                 Submit Exam
@@ -319,14 +319,14 @@ export default function ExamPage({ exams }: ExamPageProps) {
 
         {/* Question Navigator Sidebar */}
         <div className="hidden lg:block w-56 shrink-0">
-          <div className="sticky top-24 bg-white/[0.03] border border-white/8 rounded-2xl p-4">
-            <h3 className="text-xs font-bold text-white/40 uppercase tracking-wider mb-3">
+          <div className="sticky top-24 bg-white dark:bg-white/[0.03] border border-gray-200 dark:border-white/8 rounded-2xl p-4">
+            <h3 className="text-xs font-bold text-gray-900 dark:text-gray-400 dark:text-white/40 uppercase tracking-wider mb-3">
               Progress
             </h3>
 
             {exam.sections.map((section, sIdx) => (
               <div key={section.section} className="mb-4">
-                <p className="text-xs text-white/30 mb-2 truncate">{section.section_name.split("—")[0].trim()}</p>
+                <p className="text-xs text-gray-900 dark:text-gray-400 dark:text-white/30 mb-2 truncate">{section.section_name.split("—")[0].trim()}</p>
                 <div className="flex flex-wrap gap-1.5">
                   {section.questions.map((q, qIdx) => {
                     const key = `${section.section}-${q.number}`;
@@ -343,12 +343,12 @@ export default function ExamPage({ exams }: ExamPageProps) {
                         }}
                         className={`w-8 h-8 rounded-lg text-xs font-medium transition-all ${
                           isActive
-                            ? "bg-indigo-500 text-white ring-2 ring-indigo-400 ring-offset-1 ring-offset-[#0a0a0f]"
+                            ? "bg-indigo-500 text-gray-900 dark:text-white ring-2 ring-indigo-400 ring-offset-1 ring-offset-[#0a0a0f]"
                             : answered
                             ? "bg-indigo-900/60 text-indigo-300"
                             : isFlagged
                             ? "bg-amber-900/60 text-amber-300"
-                            : "bg-white/5 text-white/30 hover:bg-white/10"
+                            : "bg-gray-100 dark:bg-white/5 text-gray-900 dark:text-gray-400 dark:text-white/30 hover:bg-gray-200 dark:bg-white/10"
                         }`}
                       >
                         {q.number}
@@ -359,24 +359,24 @@ export default function ExamPage({ exams }: ExamPageProps) {
               </div>
             ))}
 
-            <div className="pt-3 border-t border-white/5 space-y-1.5">
-              <div className="flex items-center gap-2 text-xs text-white/30">
+            <div className="pt-3 border-t border-gray-200 dark:border-white/5 space-y-1.5">
+              <div className="flex items-center gap-2 text-xs text-gray-900 dark:text-gray-400 dark:text-white/30">
                 <div className="w-3 h-3 rounded bg-indigo-900/60 border border-indigo-700" />
                 Answered
               </div>
-              <div className="flex items-center gap-2 text-xs text-white/30">
+              <div className="flex items-center gap-2 text-xs text-gray-900 dark:text-gray-400 dark:text-white/30">
                 <div className="w-3 h-3 rounded bg-amber-900/60 border border-amber-700" />
                 Flagged
               </div>
-              <div className="flex items-center gap-2 text-xs text-white/30">
-                <div className="w-3 h-3 rounded bg-white/5 border border-white/10" />
+              <div className="flex items-center gap-2 text-xs text-gray-900 dark:text-gray-400 dark:text-white/30">
+                <div className="w-3 h-3 rounded bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10" />
                 Unanswered
               </div>
             </div>
 
             <button
               onClick={() => setShowSubmitModal(true)}
-              className="mt-4 w-full py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-medium hover:opacity-90 transition-opacity"
+              className="mt-4 w-full py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-gray-900 dark:text-white text-sm font-medium hover:opacity-90 transition-opacity"
             >
               Submit Exam
             </button>
@@ -397,21 +397,21 @@ export default function ExamPage({ exams }: ExamPageProps) {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-[#141420] border border-white/10 rounded-2xl p-6 w-full max-w-sm shadow-2xl"
+              className="bg-[#141420] border border-gray-200 dark:border-white/10 rounded-2xl p-6 w-full max-w-sm shadow-2xl"
             >
               <button
                 onClick={() => setShowSubmitModal(false)}
-                className="absolute top-4 right-4 text-white/40 hover:text-white transition-colors"
+                className="absolute top-4 right-4 text-gray-900 dark:text-gray-400 dark:text-white/40 hover:text-white transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
 
               <div className="text-center mb-6">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center mx-auto mb-4">
-                  <Send className="w-7 h-7 text-white" />
+                  <Send className="w-7 h-7 text-gray-900 dark:text-white" />
                 </div>
-                <h2 className="text-xl font-bold text-white mb-2">Submit Exam?</h2>
-                <p className="text-white/50 text-sm">
+                <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Submit Exam?</h2>
+                <p className="text-gray-500 dark:text-white/50 text-sm">
                   You've answered{" "}
                   <strong className="text-white">{getTotalAnswered()}</strong> of{" "}
                   <strong className="text-white">{getTotalQuestions()}</strong> questions.
@@ -429,13 +429,13 @@ export default function ExamPage({ exams }: ExamPageProps) {
               <div className="flex gap-3">
                 <button
                   onClick={() => setShowSubmitModal(false)}
-                  className="flex-1 py-2.5 rounded-xl bg-white/5 text-white/60 text-sm font-medium hover:bg-white/10 transition-colors"
+                  className="flex-1 py-2.5 rounded-xl bg-gray-100 dark:bg-white/5 text-gray-900 dark:text-gray-500 dark:text-white/60 text-sm font-medium hover:bg-gray-200 dark:bg-white/10 transition-colors"
                 >
                   Continue
                 </button>
                 <button
                   onClick={handleSubmit}
-                  className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-medium hover:opacity-90 transition-opacity"
+                  className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-gray-900 dark:text-white text-sm font-medium hover:opacity-90 transition-opacity"
                 >
                   Submit
                 </button>

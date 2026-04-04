@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Exam } from "./types/exam";
 import { saveExams } from "./lib/examStore";
+import { ThemeProvider } from "./lib/themeContext";
 import Home from "./pages/Home";
 import ExamPage from "./pages/ExamPage";
 import ResultsPage from "./pages/ResultsPage";
@@ -16,9 +17,10 @@ const EXAM_FILES = [
   "N3_1775316511181.json",
   "N2_1775317079866.json",
   "N1_1775317089807.json",
+  "N4_data.json",
 ];
 
-const EXAMS_VERSION = "v2";
+const EXAMS_VERSION = "v3";
 const VERSION_KEY = "jlpt_exams_version";
 
 function AppRouter({ exams }: { exams: Exam[] }) {
@@ -76,14 +78,16 @@ function App() {
   }, []);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-          <AppRouter exams={exams} />
-        </WouterRouter>
-        <Toaster />
-      </TooltipProvider>
-    </QueryClientProvider>
+    <ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+            <AppRouter exams={exams} />
+          </WouterRouter>
+          <Toaster />
+        </TooltipProvider>
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 }
 
