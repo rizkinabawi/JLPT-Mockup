@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "JLPT Mock Test"
+version = "1.0.0"
+id = "artifacts/jlpt-mocktest"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18478
+
+[services.development]
+run = "pnpm --filter @workspace/jlpt-mocktest run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/jlpt-mocktest", "run", "build" ]
+publicDir = "artifacts/jlpt-mocktest/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18478"
+BASE_PATH = "/"
