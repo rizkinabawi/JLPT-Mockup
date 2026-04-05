@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Exam } from "./types/exam";
 import { saveExams } from "./lib/examStore";
+import { loadExamFile } from "./lib/examLoader";
 import { ThemeProvider } from "./lib/themeContext";
 import Home from "./pages/Home";
 import ExamPage from "./pages/ExamPage";
@@ -21,7 +22,7 @@ const EXAM_FILES = [
   "N1_mixed.json",
 ];
 
-const EXAMS_VERSION = "v7";
+const EXAMS_VERSION = "v8";
 const VERSION_KEY = "jlpt_exams_version";
 
 function AppRouter({ exams }: { exams: Exam[] }) {
@@ -43,15 +44,7 @@ function App() {
 
     const loadFromFiles = () =>
       Promise.allSettled(
-        EXAM_FILES.map((file) =>
-          fetch(import.meta.env.BASE_URL + file)
-            .then((r) => {
-              if (!r.ok) return [] as Exam[];
-              return r.json() as Promise<Exam[]>;
-            })
-            .then((data) => (Array.isArray(data) ? data : [data] as Exam[]))
-            .catch(() => [] as Exam[])
-        )
+        EXAM_FILES.map((file) => loadExamFile(file).catch(() => [] as Exam[]))
       ).then((results) => {
         const allExams: Exam[] = results.flatMap((r) =>
           r.status === "fulfilled" ? r.value : []
