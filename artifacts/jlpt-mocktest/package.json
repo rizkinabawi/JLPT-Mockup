@@ -1,5 +1,5 @@
 {
-  "name": "nihongo-gakkushu",
+  "name": "@workspace/jlpt-mocktest",
   "version": "1.0.0",
   "private": true,
   "type": "module",

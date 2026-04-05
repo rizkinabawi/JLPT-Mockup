@@ -49,6 +49,15 @@ function loadAllProgress(): Record<string, Record<string, UserAnswer>> {
   }
 }
 
+function getSectionDisplayName(section: any, sIdx: number): string {
+  const title = section.title ?? section.section_name ?? "";
+  if (title.includes("語彙") || title.includes("Kosakata") || title.includes("Từ Vựng")) return "Mojigoi";
+  if (title.includes("読解") || title.includes("Membaca") || title.includes("Đọc Hiểu") || title.includes("文法・読解")) return "Dokkai";
+  if (title.includes("文字") && !title.includes("読解")) return "Moji";
+  if (title.includes("文法") || title.includes("Tata Bahasa")) return "Bunpo";
+  return `Bagian ${sIdx + 1}`;
+}
+
 export function calculateResults(
   exam: Exam,
   answers: Record<string, UserAnswer>,
@@ -57,12 +66,15 @@ export function calculateResults(
   let totalCorrect = 0;
   let totalAnswered = 0;
 
-  const sectionResults: SectionResult[] = exam.sections.map((section) => {
+  const sectionResults: SectionResult[] = exam.sections.map((section, sIdx) => {
     let sectionCorrect = 0;
     let sectionAnswered = 0;
 
+    // Use _sectionIdx from pre-processed exam if available
+    const secId = (section as any)._sectionIdx ?? sIdx;
+
     section.questions.forEach((q) => {
-      const key = `${section.section}-${q.number}`;
+      const key = `s${secId}-q${q.number}`;
       const answer = answers[key];
       if (answer && answer.selectedAnswer !== null) {
         sectionAnswered++;
@@ -74,13 +86,15 @@ export function calculateResults(
       }
     });
 
+    const sectionTotal = section.questions.length;
+
     return {
-      sectionId: section.section,
-      sectionName: section.section_name ?? section.section ?? "",
-      totalQuestions: section.total_questions,
+      sectionId: String(secId),
+      sectionName: getSectionDisplayName(section, sIdx),
+      totalQuestions: sectionTotal,
       correctAnswers: sectionCorrect,
-      score: section.total_questions > 0
-        ? Math.round((sectionCorrect / section.total_questions) * 100)
+      score: sectionTotal > 0
+        ? Math.round((sectionCorrect / sectionTotal) * 100)
         : 0,
     };
   });
