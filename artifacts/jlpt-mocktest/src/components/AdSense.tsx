@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-const CLIENT = import.meta.env.VITE_ADSENSE_CLIENT as string | undefined;
+const CLIENT = (import.meta.env.VITE_ADSENSE_CLIENT as string | undefined) ?? "ca-pub-9450003707454763";
 
 let scriptInjected = false;
 
