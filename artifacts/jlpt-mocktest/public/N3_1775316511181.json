@@ -2,7 +2,7 @@
   {
     "level": "N3",
     "exam_number": 1,
-    "total_questions": 77,
+    "total_questions": 74,
     "sections": [
       {
         "section": "1",
@@ -885,18 +885,6 @@
             "correct_text": "自炊を続けて楽しむための方法"
           },
           {
-            "number": 38,
-            "question": "",
-            "choices": {
-              "1": "",
-              "2": "",
-              "3": "",
-              "4": ""
-            },
-            "correct_answer": "",
-            "correct_text": ""
-          },
-          {
             "number": 39,
             "question": "",
             "choices": {
@@ -919,40 +907,8 @@
             },
             "correct_answer": "3",
             "correct_text": "延滞が続くと、将来借りられなくなる可能性がある。"
-          },
-          {
-            "number": 42,
-            "question": "42. 返却ボックスで返却できるのは、どのようなものか。",
-            "choices": {
-              "1": "",
-              "2": "",
-              "3": "",
-              "4": ""
-            },
-            "correct_answer": "",
-            "correct_text": ""
-          },
-          {
-            "number": 43,
-            "question": "43. 期限を過ぎた場合、この案内から分かることは何か。",
-            "choices": {
-              "1": "",
-              "2": "",
-              "3": "",
-              "4": ""
-            },
-            "correct_answer": "",
-            "correct_text": ""
           }
         ]
-      },
-      {
-        "section": "4",
-        "section_name": "Nghe (聴解) — Mendengarkan",
-        "url": "https://dethitiengnhat.com/jlpt/N3/1/4",
-        "title": "Đề thi JLPT N3 phần Nghe (聴解) tháng 1 năm 1 - dethitiengnhat.com",
-        "total_questions": 0,
-        "questions": []
       }
     ],
     "scraped_at": "2026-04-01T11:33:11.316017"
@@ -960,7 +916,7 @@
   {
     "level": "N3",
     "exam_number": 2,
-    "total_questions": 74,
+    "total_questions": 73,
     "sections": [
       {
         "section": "1",
@@ -1853,28 +1809,8 @@
             },
             "correct_answer": "2",
             "correct_text": "料金を振り込んだあとに、申し込みの手続きが終わる。"
-          },
-          {
-            "number": 39,
-            "question": "39. この教室に申し込みたい人が気をつけなければならないことは何か。",
-            "choices": {
-              "1": "",
-              "2": "",
-              "3": "",
-              "4": ""
-            },
-            "correct_answer": "",
-            "correct_text": ""
           }
         ]
-      },
-      {
-        "section": "4",
-        "section_name": "Nghe (聴解) — Mendengarkan",
-        "url": "https://dethitiengnhat.com/jlpt/N3/2/4",
-        "title": "Đề thi JLPT N3 phần Nghe (聴解) tháng 2 năm 2 - dethitiengnhat.com",
-        "total_questions": 0,
-        "questions": []
       }
     ],
     "scraped_at": "2026-04-01T11:33:17.630863"
@@ -2789,14 +2725,6 @@
             "correct_text": "④"
           }
         ]
-      },
-      {
-        "section": "4",
-        "section_name": "Nghe (聴解) — Mendengarkan",
-        "url": "https://dethitiengnhat.com/jlpt/N3/3/4",
-        "title": "Đề thi JLPT N3 phần Nghe (聴解) tháng 3 năm 3 - dethitiengnhat.com",
-        "total_questions": 0,
-        "questions": []
       }
     ],
     "scraped_at": "2026-04-01T11:33:23.869948"
@@ -3699,14 +3627,6 @@
             "correct_text": "予約するときにオンラインで料金を払わなければならない。"
           }
         ]
-      },
-      {
-        "section": "4",
-        "section_name": "Nghe (聴解) — Mendengarkan",
-        "url": "https://dethitiengnhat.com/jlpt/N3/4/4",
-        "title": "Đề thi JLPT N3 phần Nghe (聴解) tháng 4 năm 4 - dethitiengnhat.com",
-        "total_questions": 0,
-        "questions": []
       }
     ],
     "scraped_at": "2026-04-01T11:33:30.023460"
@@ -4621,14 +4541,6 @@
             "correct_text": "スマホ写真・動画編集教室に申し込みます。①春川市みどり町3-1-8②佐藤健太③042-555-7788④端末の貸し出しを希望します"
           }
         ]
-      },
-      {
-        "section": "4",
-        "section_name": "Nghe (聴解) — Mendengarkan",
-        "url": "https://dethitiengnhat.com/jlpt/N3/5/4",
-        "title": "Đề thi JLPT N3 phần Nghe (聴解) tháng 5 năm 5 - dethitiengnhat.com",
-        "total_questions": 0,
-        "questions": []
       }
     ],
     "scraped_at": "2026-04-01T11:33:36.127883"
@@ -5531,14 +5443,6 @@
             "correct_text": "13時から14時、と15時から17時。"
           }
         ]
-      },
-      {
-        "section": "4",
-        "section_name": "Nghe (聴解) — Mendengarkan",
-        "url": "https://dethitiengnhat.com/jlpt/N3/6/4",
-        "title": "Đề thi JLPT N3 phần Nghe (聴解) tháng 6 năm 6 - dethitiengnhat.com",
-        "total_questions": 0,
-        "questions": []
       }
     ],
     "scraped_at": "2026-04-01T11:33:42.774832"
