@@ -90,7 +90,7 @@ export default function AdGateModal({ level, examNumber, onUnlocked, onClose }: 
               </div>
               <div className="text-center">
                 <p className="text-white/60 text-xs mb-1">Iklan sedang diputar</p>
-                <p className="text-white/30 text-xs">Dukung NihonGoJLPT dengan menonton iklan ini</p>
+                <p className="text-white/30 text-xs">Dukung NihongoGakkushu dengan menonton iklan ini</p>
               </div>
               {/* Real ad slot — replace with Google AdSense interstitial code */}
               {/* <ins className="adsbygoogle" data-ad-client="pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" /> */}

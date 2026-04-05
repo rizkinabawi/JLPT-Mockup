@@ -36,12 +36,12 @@ export function LogoFull({ size = "md" }: Pick<NihonGoLogoProps, "size">) {
         <span
           className={`font-extrabold tracking-tight text-gray-900 dark:text-white ${sizes[size].brand}`}
         >
-          NihonGo
+          Nihongo
         </span>
         <span
           className={`font-extrabold tracking-tight text-indigo-600 dark:text-indigo-400 ${sizes[size].brand}`}
         >
-          JLPT
+          Gakkushu
         </span>
       </div>
     </div>
