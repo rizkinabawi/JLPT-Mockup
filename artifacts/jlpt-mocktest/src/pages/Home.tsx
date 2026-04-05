@@ -6,6 +6,7 @@ import { useTheme } from "../lib/themeContext";
 import { isExamUnlocked, isFreeExam, unlockExam } from "../lib/adGate";
 import AdGateModal from "../components/AdGateModal";
 import { LogoFull, LogoMark } from "../components/NihonGoLogo";
+import BroadcastToast from "../components/BroadcastToast";
 import {
   Play,
   ChevronRight,
@@ -671,6 +672,9 @@ export default function Home({ exams }: HomeProps) {
           </div>
         </div>
       </footer>
+
+      {/* Broadcast Toast — live activity feed */}
+      <BroadcastToast />
 
       {/* Ad Gate Modal */}
       {pendingExam && (
