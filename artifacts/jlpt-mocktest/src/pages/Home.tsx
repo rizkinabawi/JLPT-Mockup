@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useLocation } from "wouter";
 import { Exam } from "../types/exam";
 import { motion } from "framer-motion";
@@ -22,6 +22,7 @@ import {
   Zap,
   FileText,
   ChevronDown,
+  ChevronUp,
   Sun,
   Moon,
   Lock,
@@ -223,8 +224,32 @@ export default function Home({ exams }: HomeProps) {
   const [selectedLevel, setSelectedLevel] = useState<string>("all");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [pendingExam, setPendingExam] = useState<{ level: string; examNumber: number } | null>(null);
+  const [expandedLevels, setExpandedLevels] = useState<Set<string>>(new Set());
+  const [cardLimit, setCardLimit] = useState(8);
   const examRef = useRef<HTMLDivElement>(null);
   const { theme, toggleTheme } = useTheme();
+
+  // Responsive card limit: mobile=4, tablet=6, desktop=8
+  useEffect(() => {
+    function update() {
+      const w = window.innerWidth;
+      if (w < 640) setCardLimit(4);
+      else if (w < 1024) setCardLimit(6);
+      else setCardLimit(8);
+    }
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  const toggleExpand = (level: string) => {
+    setExpandedLevels(prev => {
+      const next = new Set(prev);
+      if (next.has(level)) next.delete(level);
+      else next.add(level);
+      return next;
+    });
+  };
 
   const levels = ["all", ...Array.from(new Set(exams.map((e) => e.level))).sort()];
 
@@ -453,97 +478,129 @@ export default function Home({ exams }: HomeProps) {
                       <span className="text-gray-400 dark:text-white/25 text-xs">{levelExams.length} ujian</span>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                      {levelExams.map((exam, idx) => {
-                        const free = isFreeExam(exam.exam_number);
-                        const unlocked = isExamUnlocked(exam.level, exam.exam_number);
-                        return (
-                          <motion.div
-                            key={`${exam.level}-${exam.exam_number}`}
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: idx * 0.05 }}
-                          >
-                            <button
-                              onClick={() => handleExamClick(exam.level, exam.exam_number)}
-                              className={`w-full text-left bg-gradient-to-br ${meta.bgLight} ${meta.bg} rounded-2xl p-5 border ${meta.borderLight} ${meta.border} hover:opacity-90 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-md group relative overflow-hidden`}
-                            >
-                              {/* Lock overlay for locked exams */}
-                              {!free && !unlocked && (
-                                <div className="absolute inset-0 bg-black/30 dark:bg-black/50 rounded-2xl backdrop-blur-[1px] z-10 flex flex-col items-center justify-center gap-2">
-                                  <div className="w-10 h-10 rounded-xl bg-black/40 flex items-center justify-center">
-                                    <Lock className="w-5 h-5 text-white/80" />
-                                  </div>
-                                  <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-yellow-500/20 border border-yellow-400/30">
-                                    <Tv2 className="w-3 h-3 text-yellow-400" />
-                                    <span className="text-yellow-400 text-xs font-bold">Tonton Iklan</span>
-                                  </div>
-                                </div>
-                              )}
+                    {(() => {
+                      const isExpanded = expandedLevels.has(level);
+                      const visible = isExpanded ? levelExams : levelExams.slice(0, cardLimit);
+                      const hidden = levelExams.length - cardLimit;
+                      return (
+                        <>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                            {visible.map((exam, idx) => {
+                              const free = isFreeExam(exam.exam_number);
+                              const unlocked = isExamUnlocked(exam.level, exam.exam_number);
+                              return (
+                                <motion.div
+                                  key={`${exam.level}-${exam.exam_number}`}
+                                  initial={{ opacity: 0, scale: 0.95 }}
+                                  whileInView={{ opacity: 1, scale: 1 }}
+                                  viewport={{ once: true }}
+                                  transition={{ delay: idx * 0.04 }}
+                                >
+                                  <button
+                                    onClick={() => handleExamClick(exam.level, exam.exam_number)}
+                                    className={`w-full text-left bg-gradient-to-br ${meta.bgLight} ${meta.bg} rounded-2xl p-5 border ${meta.borderLight} ${meta.border} hover:opacity-90 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-md group relative overflow-hidden`}
+                                  >
+                                    {/* Lock overlay */}
+                                    {!free && !unlocked && (
+                                      <div className="absolute inset-0 bg-black/30 dark:bg-black/50 rounded-2xl backdrop-blur-[1px] z-10 flex flex-col items-center justify-center gap-2">
+                                        <div className="w-10 h-10 rounded-xl bg-black/40 flex items-center justify-center">
+                                          <Lock className="w-5 h-5 text-white/80" />
+                                        </div>
+                                        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-yellow-500/20 border border-yellow-400/30">
+                                          <Tv2 className="w-3 h-3 text-yellow-400" />
+                                          <span className="text-yellow-400 text-xs font-bold">Tonton Iklan</span>
+                                        </div>
+                                      </div>
+                                    )}
 
-                              <div className="flex items-start justify-between mb-4">
-                                <span className={`px-2.5 py-1 rounded-lg text-xs font-bold ${meta.badgeLight} ${meta.badge}`}>
-                                  {exam.level}
-                                </span>
-                                {/* FREE / UNLOCKED / LOCKED badge */}
-                                {free ? (
-                                  <span className="px-2 py-0.5 rounded-lg text-xs font-bold bg-emerald-100 dark:bg-emerald-400/15 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-400/20">
-                                    GRATIS
-                                  </span>
-                                ) : unlocked ? (
-                                  <span className="px-2 py-0.5 rounded-lg text-xs font-bold bg-indigo-100 dark:bg-indigo-400/15 text-indigo-700 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-400/20">
-                                    ✓ Terbuka
-                                  </span>
-                                ) : (
-                                  <span className="px-2 py-0.5 rounded-lg text-xs font-bold bg-yellow-100 dark:bg-yellow-400/10 text-yellow-700 dark:text-yellow-400 border border-yellow-200 dark:border-yellow-400/20">
-                                    🔒 Iklan
-                                  </span>
-                                )}
-                              </div>
+                                    <div className="flex items-start justify-between mb-4">
+                                      <span className={`px-2.5 py-1 rounded-lg text-xs font-bold ${meta.badgeLight} ${meta.badge}`}>
+                                        {exam.level}
+                                      </span>
+                                      {free ? (
+                                        <span className="px-2 py-0.5 rounded-lg text-xs font-bold bg-emerald-100 dark:bg-emerald-400/15 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-400/20">
+                                          GRATIS
+                                        </span>
+                                      ) : unlocked ? (
+                                        <span className="px-2 py-0.5 rounded-lg text-xs font-bold bg-indigo-100 dark:bg-indigo-400/15 text-indigo-700 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-400/20">
+                                          ✓ Terbuka
+                                        </span>
+                                      ) : (
+                                        <span className="px-2 py-0.5 rounded-lg text-xs font-bold bg-yellow-100 dark:bg-yellow-400/10 text-yellow-700 dark:text-yellow-400 border border-yellow-200 dark:border-yellow-400/20">
+                                          🔒 Iklan
+                                        </span>
+                                      )}
+                                    </div>
 
-                              <h4 className="font-bold text-lg mb-0.5 text-gray-900 dark:text-white">
-                                Ujian #{exam.exam_number}
-                              </h4>
-                              <p className={`text-xs mb-4 ${meta.badgeTextLight} ${meta.badgeText}`}>
-                                {exam.sections.length} seksi • {meta.difficulty}
-                              </p>
+                                    <h4 className="font-bold text-lg mb-0.5 text-gray-900 dark:text-white">
+                                      Ujian #{exam.exam_number}
+                                    </h4>
+                                    <p className={`text-xs mb-4 ${meta.badgeTextLight} ${meta.badgeText}`}>
+                                      {exam.sections.length} seksi • {meta.difficulty}
+                                    </p>
 
-                              <div className="grid grid-cols-2 gap-2">
-                                <div className="bg-white/60 dark:bg-black/25 rounded-xl p-2.5">
-                                  <div className={`flex items-center gap-1 text-xs mb-1 ${meta.badgeTextLight} ${meta.badgeText}`}>
-                                    <Target className="w-3 h-3" /> Soal
-                                  </div>
-                                  <p className="font-bold text-sm text-gray-900 dark:text-white">{exam.total_questions}</p>
-                                </div>
-                                <div className="bg-white/60 dark:bg-black/25 rounded-xl p-2.5">
-                                  <div className={`flex items-center gap-1 text-xs mb-1 ${meta.badgeTextLight} ${meta.badgeText}`}>
-                                    <Clock className="w-3 h-3" /> Durasi
-                                  </div>
-                                  <p className="font-bold text-sm text-gray-900 dark:text-white">
-                                    ~{Math.round(exam.total_questions * 1.5)}m
-                                  </p>
-                                </div>
-                              </div>
+                                    <div className="grid grid-cols-2 gap-2">
+                                      <div className="bg-white/60 dark:bg-black/25 rounded-xl p-2.5">
+                                        <div className={`flex items-center gap-1 text-xs mb-1 ${meta.badgeTextLight} ${meta.badgeText}`}>
+                                          <Target className="w-3 h-3" /> Soal
+                                        </div>
+                                        <p className="font-bold text-sm text-gray-900 dark:text-white">{exam.total_questions}</p>
+                                      </div>
+                                      <div className="bg-white/60 dark:bg-black/25 rounded-xl p-2.5">
+                                        <div className={`flex items-center gap-1 text-xs mb-1 ${meta.badgeTextLight} ${meta.badgeText}`}>
+                                          <Clock className="w-3 h-3" /> Durasi
+                                        </div>
+                                        <p className="font-bold text-sm text-gray-900 dark:text-white">
+                                          ~{Math.round(exam.total_questions * 1.5)}m
+                                        </p>
+                                      </div>
+                                    </div>
 
-                              <div className={`mt-4 flex items-center gap-1.5 text-sm font-semibold ${meta.badgeTextLight} ${meta.badgeText}`}>
-                                {free || unlocked ? (
+                                    <div className={`mt-4 flex items-center gap-1.5 text-sm font-semibold ${meta.badgeTextLight} ${meta.badgeText}`}>
+                                      {free || unlocked ? (
+                                        <>
+                                          <Play className="w-3.5 h-3.5" />
+                                          Mulai Ujian
+                                        </>
+                                      ) : (
+                                        <>
+                                          <Tv2 className="w-3.5 h-3.5" />
+                                          Tonton Iklan untuk Buka
+                                        </>
+                                      )}
+                                    </div>
+                                  </button>
+                                </motion.div>
+                              );
+                            })}
+                          </div>
+
+                          {/* Show more / show less */}
+                          {levelExams.length > cardLimit && (
+                            <div className="mt-4 flex justify-center">
+                              <button
+                                onClick={() => toggleExpand(level)}
+                                className={`flex items-center gap-2 px-5 py-2 rounded-full text-sm font-semibold border transition-all
+                                  ${meta.badgeLight} ${meta.badge} ${meta.borderLight} ${meta.border}
+                                  hover:opacity-80 active:scale-95`}
+                              >
+                                {isExpanded ? (
                                   <>
-                                    <Play className="w-3.5 h-3.5" />
-                                    Mulai Ujian
+                                    <ChevronUp className="w-4 h-4" />
+                                    Sembunyikan
                                   </>
                                 ) : (
                                   <>
-                                    <Tv2 className="w-3.5 h-3.5" />
-                                    Tonton Iklan untuk Buka
+                                    <ChevronDown className="w-4 h-4" />
+                                    +{hidden} paket lainnya
                                   </>
                                 )}
-                              </div>
-                            </button>
-                          </motion.div>
-                        );
-                      })}
-                    </div>
+                              </button>
+                            </div>
+                          )}
+                        </>
+                      );
+                    })()}
                   </div>
                 );
               })
