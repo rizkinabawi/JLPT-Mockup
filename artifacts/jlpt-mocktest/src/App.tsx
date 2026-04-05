@@ -14,13 +14,14 @@ import NotFound from "@/pages/not-found";
 const queryClient = new QueryClient();
 
 const EXAM_FILES = [
+  "N5_mixed.json",
+  "N4_mixed.json",
   "N3_1775316511181.json",
   "N2_1775317079866.json",
   "N1_mixed.json",
-  "N4_mixed.json",
 ];
 
-const EXAMS_VERSION = "v6";
+const EXAMS_VERSION = "v7";
 const VERSION_KEY = "jlpt_exams_version";
 
 function AppRouter({ exams }: { exams: Exam[] }) {
