@@ -16,7 +16,7 @@ export function LogoMark({ size = "md", shape = "rounded" }: NihonGoLogoProps) {
 
   return (
     <div
-      className={`${boxClass} bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shrink-0 shadow-lg shadow-indigo-500/30`}
+      className={`${boxClass} bg-gradient-to-br from-red-500 to-orange-600 flex items-center justify-center shrink-0 shadow-lg shadow-red-500/30`}
     >
       <span
         className={`${s.text} font-black text-white leading-none select-none`}
@@ -39,7 +39,7 @@ export function LogoFull({ size = "md" }: Pick<NihonGoLogoProps, "size">) {
           Nihongo
         </span>
         <span
-          className={`font-extrabold tracking-tight text-indigo-600 dark:text-indigo-400 ${sizes[size].brand}`}
+          className={`font-extrabold tracking-tight text-red-600 dark:text-red-400 ${sizes[size].brand}`}
         >
           Gakkushu
         </span>

@@ -49,7 +49,7 @@ function generateEvent(id: number): BroadcastEvent {
 
 function avatarColor(name: string) {
   const palette = [
-    "bg-indigo-500", "bg-purple-500", "bg-pink-500", "bg-rose-500",
+    "bg-red-600", "bg-purple-500", "bg-pink-500", "bg-rose-500",
     "bg-amber-500", "bg-emerald-500", "bg-teal-500", "bg-sky-500",
   ];
   const idx = name.charCodeAt(0) % palette.length;
@@ -58,7 +58,7 @@ function avatarColor(name: string) {
 
 function EventIcon({ type }: { type: BroadcastEvent["type"] }) {
   if (type === "pass") return <Award className="w-3.5 h-3.5 text-emerald-400" />;
-  if (type === "complete") return <BookOpen className="w-3.5 h-3.5 text-indigo-400" />;
+  if (type === "complete") return <BookOpen className="w-3.5 h-3.5 text-red-400" />;
   return <TrendingUp className="w-3.5 h-3.5 text-amber-400" />;
 }
 
@@ -72,7 +72,7 @@ function EventMessage({ event }: { event: BroadcastEvent }) {
       <>
         <span className="font-semibold text-white">{event.name}</span>
         {" lulus "}
-        <span className="font-semibold text-indigo-300">JLPT {event.level}</span>
+        <span className="font-semibold text-orange-300">JLPT {event.level}</span>
         {" Pack "}
         <span className="font-semibold">{event.pack}</span>
         {" dengan skor "}
@@ -84,7 +84,7 @@ function EventMessage({ event }: { event: BroadcastEvent }) {
       <>
         <span className="font-semibold text-white">{event.name}</span>
         {" menyelesaikan "}
-        <span className="font-semibold text-indigo-300">JLPT {event.level}</span>
+        <span className="font-semibold text-orange-300">JLPT {event.level}</span>
         {" Pack "}
         <span className="font-semibold">{event.pack}</span>
         {" skor "}
@@ -96,7 +96,7 @@ function EventMessage({ event }: { event: BroadcastEvent }) {
       <>
         <span className="font-semibold text-white">{event.name}</span>
         {" memulai latihan "}
-        <span className="font-semibold text-indigo-300">JLPT {event.level}</span>
+        <span className="font-semibold text-orange-300">JLPT {event.level}</span>
         {" Pack "}
         <span className="font-semibold">{event.pack}</span>
       </>

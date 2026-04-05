@@ -51,7 +51,7 @@ export default function ResultsPage({ exams }: ResultsPageProps) {
           <p className="text-gray-500 dark:text-white/50 mb-4">Results not found</p>
           <button
             onClick={() => navigate("/")}
-            className="px-4 py-2 bg-indigo-600 rounded-xl text-sm"
+            className="px-4 py-2 bg-red-600 rounded-xl text-sm"
           >
             Back to Home
           </button>
@@ -292,7 +292,7 @@ export default function ResultsPage({ exams }: ResultsPageProps) {
           </button>
           <button
             onClick={() => navigate("/")}
-            className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-gray-900 dark:text-white text-sm font-medium hover:opacity-90 transition-opacity"
+            className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-red-600 to-orange-500 text-gray-900 dark:text-white text-sm font-medium hover:opacity-90 transition-opacity"
           >
             <Trophy className="w-4 h-4" />
             Back to Exams

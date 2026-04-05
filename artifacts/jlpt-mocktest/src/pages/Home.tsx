@@ -73,15 +73,15 @@ const LEVEL_META: Record<string, {
     difficulty: "Sulit",
   },
   N3: {
-    bg: "dark:from-indigo-950/80 dark:to-violet-950/60",
-    bgLight: "from-indigo-50 to-violet-50",
-    glow: "shadow-indigo-900/30",
-    badge: "dark:bg-indigo-800/80 dark:text-indigo-200",
-    badgeLight: "bg-indigo-100 text-indigo-700",
-    badgeText: "dark:text-indigo-300",
-    badgeTextLight: "text-indigo-600",
-    border: "dark:border-indigo-900/60",
-    borderLight: "border-indigo-200",
+    bg: "dark:from-amber-950/80 dark:to-yellow-950/60",
+    bgLight: "from-amber-50 to-yellow-50",
+    glow: "shadow-red-900/30",
+    badge: "dark:bg-amber-800/80 dark:text-amber-200",
+    badgeLight: "bg-amber-100 text-amber-700",
+    badgeText: "dark:text-orange-300",
+    badgeTextLight: "text-red-600",
+    border: "dark:border-amber-900/60",
+    borderLight: "border-red-200",
     desc: "Kemampuan memahami bahasa Jepang hingga tingkat tertentu",
     difficulty: "Menengah",
   },
@@ -118,8 +118,8 @@ const FEATURES = [
     icon: FileText,
     title: "Soal Autentik",
     desc: "Soal-soal diadaptasi dari ujian JLPT resmi, memastikan kamu berlatih dengan materi yang akurat.",
-    color: "text-indigo-500",
-    bg: "bg-indigo-100 dark:bg-indigo-950/40",
+    color: "text-red-500",
+    bg: "bg-red-100 dark:bg-red-950/40",
   },
   {
     icon: Target,
@@ -139,8 +139,8 @@ const FEATURES = [
     icon: Zap,
     title: "Progress Tersimpan",
     desc: "Jawaban tersimpan otomatis, tidak perlu khawatir kehilangan progress jika keluar.",
-    color: "text-purple-600",
-    bg: "bg-purple-100 dark:bg-purple-950/40",
+    color: "text-orange-600",
+    bg: "bg-orange-100 dark:bg-orange-950/40",
   },
   {
     icon: Shield,
@@ -308,12 +308,12 @@ export default function Home({ exams }: HomeProps) {
               {theme === "dark" ? (
                 <Sun className="w-4 h-4 text-amber-500" />
               ) : (
-                <Moon className="w-4 h-4 text-indigo-600" />
+                <Moon className="w-4 h-4 text-red-600" />
               )}
             </button>
             <button
               onClick={scrollToExams}
-              className="bg-indigo-600 hover:bg-indigo-500 transition-colors px-4 py-2 rounded-xl text-sm font-semibold text-white"
+              className="bg-red-600 hover:bg-red-500 transition-colors px-4 py-2 rounded-xl text-sm font-semibold text-white"
             >
               Mulai Sekarang
             </button>
@@ -329,7 +329,7 @@ export default function Home({ exams }: HomeProps) {
       {/* ── HERO ── */}
       <section className="relative pt-10 pb-24 px-6 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(99,102,241,0.10),transparent)]" />
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-indigo-500/20 to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-500/20 to-transparent" />
 
         <div className="relative max-w-5xl mx-auto text-center">
           <motion.div
@@ -337,14 +337,14 @@ export default function Home({ exams }: HomeProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="inline-flex items-center gap-2 bg-indigo-100 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800/50 rounded-full px-4 py-1.5 text-xs font-medium text-indigo-700 dark:text-indigo-300 mb-8">
-              <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" />
+            <div className="inline-flex items-center gap-2 bg-red-100 dark:bg-red-950/60 border border-red-200 dark:border-red-800/50 rounded-full px-4 py-1.5 text-xs font-medium text-red-700 dark:text-orange-300 mb-8">
+              <span className="w-1.5 h-1.5 rounded-full bg-red-600 animate-pulse" />
               Platform Latihan JLPT #1 Terpercaya
             </div>
 
             <h1 className="text-5xl md:text-7xl font-black text-gray-900 dark:text-white leading-tight tracking-tight mb-6">
               Kuasai Bahasa Jepang{" "}
-              <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-red-500 via-orange-400 to-amber-400 bg-clip-text text-transparent">
                 Lebih Cepat
               </span>
             </h1>
@@ -357,7 +357,7 @@ export default function Home({ exams }: HomeProps) {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <button
                 onClick={scrollToExams}
-                className="group flex items-center gap-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 transition-all px-8 py-4 rounded-2xl text-base font-bold text-white shadow-xl shadow-indigo-500/25"
+                className="group flex items-center gap-3 bg-gradient-to-r from-red-600 to-orange-500 hover:from-red-500 hover:to-orange-400 transition-all px-8 py-4 rounded-2xl text-base font-bold text-white shadow-xl shadow-red-500/25"
               >
                 <Play className="w-5 h-5" />
                 Mulai Ujian Gratis
@@ -384,7 +384,7 @@ export default function Home({ exams }: HomeProps) {
                 key={stat.label}
                 className="bg-white dark:bg-white/[0.04] border border-gray-200 dark:border-white/8 rounded-2xl p-4 text-center shadow-sm"
               >
-                <stat.icon className="w-5 h-5 text-indigo-600 dark:text-indigo-400 mx-auto mb-2" />
+                <stat.icon className="w-5 h-5 text-red-600 dark:text-red-400 mx-auto mb-2" />
                 <p className="text-2xl font-black text-gray-900 dark:text-white">{stat.value}</p>
                 <p className="text-xs text-gray-400 dark:text-white/40 mt-0.5">{stat.label}</p>
               </div>
@@ -397,7 +397,7 @@ export default function Home({ exams }: HomeProps) {
       <section id="fitur" className="py-24 px-6 bg-white dark:bg-transparent">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-14">
-            <p className="text-indigo-600 dark:text-indigo-400 text-sm font-bold tracking-widest uppercase mb-3">Kenapa Pilih Kami</p>
+            <p className="text-red-600 dark:text-red-400 text-sm font-bold tracking-widest uppercase mb-3">Kenapa Pilih Kami</p>
             <h2 className="text-4xl font-black text-gray-900 dark:text-white mb-4">
               Semua yang Kamu Butuhkan untuk Lulus JLPT
             </h2>
@@ -414,7 +414,7 @@ export default function Home({ exams }: HomeProps) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.07 }}
-                className="bg-gray-50 dark:bg-white/[0.03] border border-gray-200 dark:border-white/8 rounded-2xl p-6 hover:border-indigo-300 dark:hover:border-white/15 transition-colors group"
+                className="bg-gray-50 dark:bg-white/[0.03] border border-gray-200 dark:border-white/8 rounded-2xl p-6 hover:border-red-300 dark:hover:border-white/15 transition-colors group"
               >
                 <div className={`w-12 h-12 rounded-xl ${f.bg} flex items-center justify-center mb-4`}>
                   <f.icon className={`w-6 h-6 ${f.color}`} />
@@ -431,7 +431,7 @@ export default function Home({ exams }: HomeProps) {
       <section ref={examRef} id="ujian" className="py-24 px-6 bg-gray-100/50 dark:bg-white/[0.02]">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <p className="text-indigo-600 dark:text-indigo-400 text-sm font-bold tracking-widest uppercase mb-3">Bank Soal</p>
+            <p className="text-red-600 dark:text-red-400 text-sm font-bold tracking-widest uppercase mb-3">Bank Soal</p>
             <h2 className="text-4xl font-black text-gray-900 dark:text-white mb-4">Pilih Level & Mulai Berlatih</h2>
             <p className="text-gray-500 dark:text-white/40 max-w-xl mx-auto">
               Tersedia {exams.length} paket ujian dengan {totalQuestions.toLocaleString()} soal untuk {totalLevels} level berbeda.
@@ -446,7 +446,7 @@ export default function Home({ exams }: HomeProps) {
                 onClick={() => setSelectedLevel(level)}
                 className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all ${
                   selectedLevel === level
-                    ? "bg-indigo-600 text-white shadow-lg shadow-indigo-500/25"
+                    ? "bg-red-600 text-white shadow-lg shadow-red-500/25"
                     : "bg-white dark:bg-white/5 text-gray-500 dark:text-white/50 hover:bg-gray-100 dark:hover:bg-white/10 hover:text-gray-800 dark:hover:text-white/80 border border-gray-200 dark:border-white/5"
                 }`}
               >
@@ -522,7 +522,7 @@ export default function Home({ exams }: HomeProps) {
                                           GRATIS
                                         </span>
                                       ) : unlocked ? (
-                                        <span className="px-2 py-0.5 rounded-lg text-xs font-bold bg-indigo-100 dark:bg-indigo-400/15 text-indigo-700 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-400/20">
+                                        <span className="px-2 py-0.5 rounded-lg text-xs font-bold bg-red-100 dark:bg-red-400/15 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-400/20">
                                           ✓ Terbuka
                                         </span>
                                       ) : (
@@ -615,7 +615,7 @@ export default function Home({ exams }: HomeProps) {
       <section className="py-24 px-6 bg-white dark:bg-transparent">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-14">
-            <p className="text-indigo-600 dark:text-indigo-400 text-sm font-bold tracking-widest uppercase mb-3">Testimoni</p>
+            <p className="text-red-600 dark:text-red-400 text-sm font-bold tracking-widest uppercase mb-3">Testimoni</p>
             <h2 className="text-4xl font-black text-gray-900 dark:text-white mb-4">Mereka Sudah Berhasil</h2>
             <p className="text-gray-400 dark:text-white/40">Bergabung dengan ribuan pelajar yang telah sukses lulus JLPT bersama kami.</p>
           </div>
@@ -655,7 +655,7 @@ export default function Home({ exams }: HomeProps) {
       <section id="faq" className="py-24 px-6 bg-gray-100/50 dark:bg-white/[0.02]">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12">
-            <p className="text-indigo-600 dark:text-indigo-400 text-sm font-bold tracking-widest uppercase mb-3">FAQ</p>
+            <p className="text-red-600 dark:text-red-400 text-sm font-bold tracking-widest uppercase mb-3">FAQ</p>
             <h2 className="text-4xl font-black text-gray-900 dark:text-white mb-4">Pertanyaan Umum</h2>
           </div>
 
@@ -692,7 +692,7 @@ export default function Home({ exams }: HomeProps) {
       {/* ── CTA BANNER ── */}
       <section className="py-20 px-6 bg-white dark:bg-transparent">
         <div className="max-w-4xl mx-auto">
-          <div className="relative bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/80 dark:to-purple-950/60 border border-indigo-200 dark:border-indigo-800/40 rounded-3xl p-12 text-center overflow-hidden">
+          <div className="relative bg-gradient-to-br from-red-50 to-orange-50 dark:from-red-950/80 dark:to-orange-950/60 border border-red-200 dark:border-red-800/40 rounded-3xl p-12 text-center overflow-hidden">
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_60%_at_50%_50%,rgba(99,102,241,0.08),transparent)]" />
             <div className="relative">
               <h2 className="text-4xl font-black text-gray-900 dark:text-white mb-4">
@@ -703,7 +703,7 @@ export default function Home({ exams }: HomeProps) {
               </p>
               <button
                 onClick={scrollToExams}
-                className="inline-flex items-center gap-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:opacity-90 transition-opacity px-10 py-4 rounded-2xl text-base font-bold text-white shadow-xl shadow-indigo-500/25"
+                className="inline-flex items-center gap-3 bg-gradient-to-r from-red-600 to-orange-500 hover:opacity-90 transition-opacity px-10 py-4 rounded-2xl text-base font-bold text-white shadow-xl shadow-red-500/25"
               >
                 <Play className="w-5 h-5" />
                 Mulai Ujian Sekarang

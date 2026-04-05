@@ -85,8 +85,8 @@ export default function AdGateModal({ level, examNumber, onUnlocked, onClose }: 
           {/* Ad Area */}
           <div className="relative bg-gradient-to-br from-gray-900 to-gray-950 aspect-video flex flex-col items-center justify-center gap-4">
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 px-6">
-              <div className="w-20 h-20 rounded-2xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center">
-                <Play className="w-8 h-8 text-indigo-400" />
+              <div className="w-20 h-20 rounded-2xl bg-red-600/20 border border-red-500/30 flex items-center justify-center">
+                <Play className="w-8 h-8 text-red-400" />
               </div>
               <div className="text-center">
                 <p className="text-white/60 text-xs mb-1">Iklan sedang diputar</p>
@@ -99,7 +99,7 @@ export default function AdGateModal({ level, examNumber, onUnlocked, onClose }: 
             {/* Progress bar overlay */}
             <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/10">
               <motion.div
-                className="h-full bg-indigo-500"
+                className="h-full bg-red-500"
                 initial={{ width: "0%" }}
                 animate={{ width: `${progress}%` }}
                 transition={{ duration: 0.5, ease: "linear" }}
@@ -135,7 +135,7 @@ export default function AdGateModal({ level, examNumber, onUnlocked, onClose }: 
                 </p>
                 <button
                   onClick={onUnlocked}
-                  className="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition-colors"
+                  className="w-full py-3 rounded-xl bg-red-600 hover:bg-red-500 text-white font-semibold text-sm transition-colors"
                 >
                   Mulai Ujian Sekarang →
                 </button>
@@ -148,7 +148,7 @@ export default function AdGateModal({ level, examNumber, onUnlocked, onClose }: 
                 </div>
                 <div className="w-full h-2 bg-white/8 rounded-full overflow-hidden">
                   <motion.div
-                    className="h-full bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full"
+                    className="h-full bg-gradient-to-r from-red-600 to-orange-500 rounded-full"
                     initial={{ width: "0%" }}
                     animate={{ width: `${progress}%` }}
                     transition={{ duration: 0.5, ease: "linear" }}
@@ -188,7 +188,7 @@ export default function AdGateModal({ level, examNumber, onUnlocked, onClose }: 
                   <div className="flex gap-3">
                     <button
                       onClick={() => setConfirmClose(false)}
-                      className="flex-1 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold transition-colors"
+                      className="flex-1 py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white text-sm font-semibold transition-colors"
                     >
                       Tetap Tonton
                     </button>
