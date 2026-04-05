@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useLocation, useParams } from "wouter";
 import { Exam, Question, Section, UserAnswer } from "../types/exam";
 import { saveProgress, loadProgress, clearProgress, calculateResults } from "../lib/examStore";
+import { isExamUnlocked } from "../lib/adGate";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ChevronLeft,
@@ -30,6 +31,15 @@ export default function ExamPage({ exams }: ExamPageProps) {
   );
 
   const examKey = `${params.level}-${params.examNumber}`;
+
+  // Guard: redirect to home if exam is locked (accessed via direct URL)
+  useEffect(() => {
+    if (params.level && params.examNumber) {
+      if (!isExamUnlocked(params.level, Number(params.examNumber))) {
+        navigate("/");
+      }
+    }
+  }, [params.level, params.examNumber]);
 
   const [currentSectionIdx, setCurrentSectionIdx] = useState(0);
   const [currentQuestionIdx, setCurrentQuestionIdx] = useState(0);

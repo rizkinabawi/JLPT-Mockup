@@ -3,6 +3,8 @@ import { useLocation } from "wouter";
 import { Exam } from "../types/exam";
 import { motion } from "framer-motion";
 import { useTheme } from "../lib/themeContext";
+import { isExamUnlocked, isFreeExam, unlockExam } from "../lib/adGate";
+import AdGateModal from "../components/AdGateModal";
 import {
   BookOpen,
   Play,
@@ -21,6 +23,8 @@ import {
   ChevronDown,
   Sun,
   Moon,
+  Lock,
+  Tv2,
 } from "lucide-react";
 
 interface HomeProps {
@@ -217,6 +221,7 @@ export default function Home({ exams }: HomeProps) {
   const [, navigate] = useLocation();
   const [selectedLevel, setSelectedLevel] = useState<string>("all");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [pendingExam, setPendingExam] = useState<{ level: string; examNumber: number } | null>(null);
   const examRef = useRef<HTMLDivElement>(null);
   const { theme, toggleTheme } = useTheme();
 
@@ -237,6 +242,21 @@ export default function Home({ exams }: HomeProps) {
 
   const scrollToExams = () => {
     examRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleExamClick = (level: string, examNumber: number) => {
+    if (isExamUnlocked(level, examNumber)) {
+      navigate(`/exam/${level}/${examNumber}`);
+    } else {
+      setPendingExam({ level, examNumber });
+    }
+  };
+
+  const handleAdWatched = () => {
+    if (!pendingExam) return;
+    unlockExam(pendingExam.level, pendingExam.examNumber);
+    navigate(`/exam/${pendingExam.level}/${pendingExam.examNumber}`);
+    setPendingExam(null);
   };
 
   return (
@@ -441,56 +461,95 @@ export default function Home({ exams }: HomeProps) {
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                      {levelExams.map((exam, idx) => (
-                        <motion.div
-                          key={`${exam.level}-${exam.exam_number}`}
-                          initial={{ opacity: 0, scale: 0.95 }}
-                          whileInView={{ opacity: 1, scale: 1 }}
-                          viewport={{ once: true }}
-                          transition={{ delay: idx * 0.05 }}
-                        >
-                          <button
-                            onClick={() => navigate(`/exam/${exam.level}/${exam.exam_number}`)}
-                            className={`w-full text-left bg-gradient-to-br ${meta.bgLight} ${meta.bg} rounded-2xl p-5 border ${meta.borderLight} ${meta.border} hover:opacity-90 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-md group`}
+                      {levelExams.map((exam, idx) => {
+                        const free = isFreeExam(exam.exam_number);
+                        const unlocked = isExamUnlocked(exam.level, exam.exam_number);
+                        return (
+                          <motion.div
+                            key={`${exam.level}-${exam.exam_number}`}
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: idx * 0.05 }}
                           >
-                            <div className="flex items-start justify-between mb-4">
-                              <span className={`px-2.5 py-1 rounded-lg text-xs font-bold ${meta.badgeLight} ${meta.badge}`}>
-                                {exam.level}
-                              </span>
-                              <ChevronRight className={`w-4 h-4 ${meta.badgeTextLight} ${meta.badgeText} opacity-0 group-hover:opacity-100 transition-opacity`} />
-                            </div>
-
-                            <h4 className="font-bold text-lg mb-0.5 text-gray-900 dark:text-white">
-                              Ujian #{exam.exam_number}
-                            </h4>
-                            <p className={`text-xs mb-4 ${meta.badgeTextLight} ${meta.badgeText}`}>
-                              {exam.sections.length} seksi • {meta.difficulty}
-                            </p>
-
-                            <div className="grid grid-cols-2 gap-2">
-                              <div className="bg-white/60 dark:bg-black/25 rounded-xl p-2.5">
-                                <div className={`flex items-center gap-1 text-xs mb-1 ${meta.badgeTextLight} ${meta.badgeText}`}>
-                                  <Target className="w-3 h-3" /> Soal
+                            <button
+                              onClick={() => handleExamClick(exam.level, exam.exam_number)}
+                              className={`w-full text-left bg-gradient-to-br ${meta.bgLight} ${meta.bg} rounded-2xl p-5 border ${meta.borderLight} ${meta.border} hover:opacity-90 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-md group relative overflow-hidden`}
+                            >
+                              {/* Lock overlay for locked exams */}
+                              {!free && !unlocked && (
+                                <div className="absolute inset-0 bg-black/30 dark:bg-black/50 rounded-2xl backdrop-blur-[1px] z-10 flex flex-col items-center justify-center gap-2">
+                                  <div className="w-10 h-10 rounded-xl bg-black/40 flex items-center justify-center">
+                                    <Lock className="w-5 h-5 text-white/80" />
+                                  </div>
+                                  <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-yellow-500/20 border border-yellow-400/30">
+                                    <Tv2 className="w-3 h-3 text-yellow-400" />
+                                    <span className="text-yellow-400 text-xs font-bold">Tonton Iklan</span>
+                                  </div>
                                 </div>
-                                <p className="font-bold text-sm text-gray-900 dark:text-white">{exam.total_questions}</p>
-                              </div>
-                              <div className="bg-white/60 dark:bg-black/25 rounded-xl p-2.5">
-                                <div className={`flex items-center gap-1 text-xs mb-1 ${meta.badgeTextLight} ${meta.badgeText}`}>
-                                  <Clock className="w-3 h-3" /> Durasi
-                                </div>
-                                <p className="font-bold text-sm text-gray-900 dark:text-white">
-                                  ~{Math.round(exam.total_questions * 1.5)}m
-                                </p>
-                              </div>
-                            </div>
+                              )}
 
-                            <div className={`mt-4 flex items-center gap-1.5 text-sm font-semibold ${meta.badgeTextLight} ${meta.badgeText}`}>
-                              <Play className="w-3.5 h-3.5" />
-                              Mulai Ujian
-                            </div>
-                          </button>
-                        </motion.div>
-                      ))}
+                              <div className="flex items-start justify-between mb-4">
+                                <span className={`px-2.5 py-1 rounded-lg text-xs font-bold ${meta.badgeLight} ${meta.badge}`}>
+                                  {exam.level}
+                                </span>
+                                {/* FREE / UNLOCKED / LOCKED badge */}
+                                {free ? (
+                                  <span className="px-2 py-0.5 rounded-lg text-xs font-bold bg-emerald-100 dark:bg-emerald-400/15 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-400/20">
+                                    GRATIS
+                                  </span>
+                                ) : unlocked ? (
+                                  <span className="px-2 py-0.5 rounded-lg text-xs font-bold bg-indigo-100 dark:bg-indigo-400/15 text-indigo-700 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-400/20">
+                                    ✓ Terbuka
+                                  </span>
+                                ) : (
+                                  <span className="px-2 py-0.5 rounded-lg text-xs font-bold bg-yellow-100 dark:bg-yellow-400/10 text-yellow-700 dark:text-yellow-400 border border-yellow-200 dark:border-yellow-400/20">
+                                    🔒 Iklan
+                                  </span>
+                                )}
+                              </div>
+
+                              <h4 className="font-bold text-lg mb-0.5 text-gray-900 dark:text-white">
+                                Ujian #{exam.exam_number}
+                              </h4>
+                              <p className={`text-xs mb-4 ${meta.badgeTextLight} ${meta.badgeText}`}>
+                                {exam.sections.length} seksi • {meta.difficulty}
+                              </p>
+
+                              <div className="grid grid-cols-2 gap-2">
+                                <div className="bg-white/60 dark:bg-black/25 rounded-xl p-2.5">
+                                  <div className={`flex items-center gap-1 text-xs mb-1 ${meta.badgeTextLight} ${meta.badgeText}`}>
+                                    <Target className="w-3 h-3" /> Soal
+                                  </div>
+                                  <p className="font-bold text-sm text-gray-900 dark:text-white">{exam.total_questions}</p>
+                                </div>
+                                <div className="bg-white/60 dark:bg-black/25 rounded-xl p-2.5">
+                                  <div className={`flex items-center gap-1 text-xs mb-1 ${meta.badgeTextLight} ${meta.badgeText}`}>
+                                    <Clock className="w-3 h-3" /> Durasi
+                                  </div>
+                                  <p className="font-bold text-sm text-gray-900 dark:text-white">
+                                    ~{Math.round(exam.total_questions * 1.5)}m
+                                  </p>
+                                </div>
+                              </div>
+
+                              <div className={`mt-4 flex items-center gap-1.5 text-sm font-semibold ${meta.badgeTextLight} ${meta.badgeText}`}>
+                                {free || unlocked ? (
+                                  <>
+                                    <Play className="w-3.5 h-3.5" />
+                                    Mulai Ujian
+                                  </>
+                                ) : (
+                                  <>
+                                    <Tv2 className="w-3.5 h-3.5" />
+                                    Tonton Iklan untuk Buka
+                                  </>
+                                )}
+                              </div>
+                            </button>
+                          </motion.div>
+                        );
+                      })}
                     </div>
                   </div>
                 );
@@ -625,6 +684,16 @@ export default function Home({ exams }: HomeProps) {
           </div>
         </div>
       </footer>
+
+      {/* Ad Gate Modal */}
+      {pendingExam && (
+        <AdGateModal
+          level={pendingExam.level}
+          examNumber={pendingExam.examNumber}
+          onUnlocked={handleAdWatched}
+          onClose={() => setPendingExam(null)}
+        />
+      )}
     </div>
   );
 }
