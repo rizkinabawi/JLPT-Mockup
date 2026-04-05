@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Play, Volume2, VolumeX, AlertTriangle } from "lucide-react";
+import { X, Play, AlertTriangle } from "lucide-react";
+import { AdSenseInterstitial } from "./AdSense";
+
+const SLOT_GATE = import.meta.env.VITE_ADSENSE_SLOT_GATE as string | undefined;
 
 interface AdGateModalProps {
   level: string;
@@ -14,7 +17,6 @@ const AD_DURATION = 30;
 export default function AdGateModal({ level, examNumber, onUnlocked, onClose }: AdGateModalProps) {
   const [countdown, setCountdown] = useState(AD_DURATION);
   const [done, setDone] = useState(false);
-  const [muted, setMuted] = useState(true);
   const [confirmClose, setConfirmClose] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -83,18 +85,24 @@ export default function AdGateModal({ level, examNumber, onUnlocked, onClose }: 
           </div>
 
           {/* Ad Area */}
-          <div className="relative bg-gradient-to-br from-gray-900 to-gray-950 aspect-video flex flex-col items-center justify-center gap-4">
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 px-6">
-              <div className="w-20 h-20 rounded-2xl bg-red-600/20 border border-red-500/30 flex items-center justify-center">
-                <Play className="w-8 h-8 text-red-400" />
+          <div className="relative bg-gradient-to-br from-gray-900 to-gray-950 min-h-[200px] flex flex-col items-center justify-center">
+            {SLOT_GATE ? (
+              /* Real AdSense ad */
+              <div className="relative w-full">
+                <AdSenseInterstitial slot={SLOT_GATE} className="w-full" />
               </div>
-              <div className="text-center">
-                <p className="text-white/60 text-xs mb-1">Iklan sedang diputar</p>
-                <p className="text-white/30 text-xs">Dukung NihongoGakkushu dengan menonton iklan ini</p>
+            ) : (
+              /* Placeholder (shown until AdSense is configured) */
+              <div className="flex flex-col items-center justify-center gap-4 px-6 py-8">
+                <div className="w-20 h-20 rounded-2xl bg-red-600/20 border border-red-500/30 flex items-center justify-center">
+                  <Play className="w-8 h-8 text-red-400" />
+                </div>
+                <div className="text-center">
+                  <p className="text-white/60 text-xs mb-1">Iklan sedang diputar</p>
+                  <p className="text-white/30 text-xs">Dukung NihongoGakkushu dengan menonton iklan ini</p>
+                </div>
               </div>
-              {/* Real ad slot — replace with Google AdSense interstitial code */}
-              {/* <ins className="adsbygoogle" data-ad-client="pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" /> */}
-            </div>
+            )}
 
             {/* Progress bar overlay */}
             <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/10">
@@ -105,14 +113,6 @@ export default function AdGateModal({ level, examNumber, onUnlocked, onClose }: 
                 transition={{ duration: 0.5, ease: "linear" }}
               />
             </div>
-
-            {/* Mute toggle */}
-            <button
-              onClick={() => setMuted(!muted)}
-              className="absolute bottom-3 right-3 w-8 h-8 rounded-lg bg-black/40 flex items-center justify-center text-white/50 hover:text-white transition-colors"
-            >
-              {muted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-            </button>
 
             {/* Countdown badge */}
             {!done && (

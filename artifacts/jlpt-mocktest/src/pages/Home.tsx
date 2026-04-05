@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { useTheme } from "../lib/themeContext";
 import { isExamUnlocked, isFreeExam, unlockExam } from "../lib/adGate";
 import AdGateModal from "../components/AdGateModal";
+import { AdSenseBanner } from "../components/AdSense";
 import { LogoFull, LogoMark } from "../components/NihonGoLogo";
 import BroadcastToast from "../components/BroadcastToast";
 import {
@@ -205,15 +206,26 @@ const FAQ = [
   },
 ];
 
+const SLOT_BANNER_TOP = import.meta.env.VITE_ADSENSE_SLOT_BANNER_TOP as string | undefined;
+const SLOT_BANNER_MID = import.meta.env.VITE_ADSENSE_SLOT_BANNER_MID as string | undefined;
+const SLOT_BANNER_BOTTOM = import.meta.env.VITE_ADSENSE_SLOT_BANNER_BOTTOM as string | undefined;
+
+const SLOT_MAP: Record<string, string | undefined> = {
+  "banner-top": SLOT_BANNER_TOP,
+  "banner-mid": SLOT_BANNER_MID,
+  "banner-bottom": SLOT_BANNER_BOTTOM,
+};
+
 function BannerAd({ slot, className = "" }: { slot: string; className?: string }) {
+  const adSlot = SLOT_MAP[slot];
   return (
     <div className={`w-full flex items-center justify-center ${className}`}>
       <div className="w-full max-w-4xl mx-auto px-6">
-        <div className="w-full h-[90px] bg-gray-100 dark:bg-white/5 border border-dashed border-gray-300 dark:border-white/10 rounded-xl flex items-center justify-center">
-          <span className="text-xs text-gray-400 dark:text-white/25 select-none">
-            Advertisement — {slot}
-          </span>
-        </div>
+        <AdSenseBanner
+          slot={adSlot ?? ""}
+          format="horizontal"
+          className="w-full min-h-[90px] rounded-xl overflow-hidden"
+        />
       </div>
     </div>
   );
