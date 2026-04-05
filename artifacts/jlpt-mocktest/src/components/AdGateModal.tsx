@@ -9,7 +9,8 @@ interface AdGateModalProps {
   onClose: () => void;
 }
 
-const AD_DURATION = 15;
+// 30 seconds = standard Google AdSense non-skippable interstitial duration
+const AD_DURATION = 30;
 
 export default function AdGateModal({ level, examNumber, onUnlocked, onClose }: AdGateModalProps) {
   const [countdown, setCountdown] = useState(AD_DURATION);

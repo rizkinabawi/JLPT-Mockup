@@ -5,8 +5,8 @@ import { motion } from "framer-motion";
 import { useTheme } from "../lib/themeContext";
 import { isExamUnlocked, isFreeExam, unlockExam } from "../lib/adGate";
 import AdGateModal from "../components/AdGateModal";
+import { LogoFull, LogoMark } from "../components/NihonGoLogo";
 import {
-  BookOpen,
   Play,
   ChevronRight,
   Target,
@@ -265,15 +265,7 @@ export default function Home({ exams }: HomeProps) {
       {/* ── NAVBAR ── */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-[#07070f]/90 backdrop-blur-xl border-b border-gray-200 dark:border-white/5">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
-              <BookOpen className="w-4 h-4 text-white" />
-            </div>
-            <div>
-              <span className="font-bold text-gray-900 dark:text-white text-sm tracking-tight">NihonGo</span>
-              <span className="text-indigo-600 dark:text-indigo-400 text-sm font-bold">JLPT</span>
-            </div>
-          </div>
+          <LogoFull size="md" />
 
           <div className="hidden md:flex items-center gap-7 text-sm text-gray-500 dark:text-white/50">
             <button onClick={scrollToExams} className="hover:text-gray-900 dark:hover:text-white transition-colors">Mulai Ujian</button>
@@ -439,8 +431,8 @@ export default function Home({ exams }: HomeProps) {
 
           {/* Exams Grid */}
           {Object.keys(groupedExams).length === 0 ? (
-            <div className="text-center py-20 text-gray-400 dark:text-white/30">
-              <BookOpen className="w-12 h-12 mx-auto mb-4 opacity-30" />
+            <div className="text-center py-20 text-gray-400 dark:text-white/30 flex flex-col items-center gap-4">
+              <LogoMark size="lg" />
               <p>Memuat soal ujian...</p>
             </div>
           ) : (
@@ -669,12 +661,7 @@ export default function Home({ exams }: HomeProps) {
       {/* ── FOOTER ── */}
       <footer className="border-t border-gray-200 dark:border-white/5 py-10 px-6 bg-white dark:bg-transparent">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
-              <BookOpen className="w-4 h-4 text-white" />
-            </div>
-            <span className="font-bold text-gray-900 dark:text-white">NihonGo<span className="text-indigo-600 dark:text-indigo-400">JLPT</span></span>
-          </div>
+          <LogoFull size="sm" />
           <p className="text-gray-400 dark:text-white/30 text-sm text-center">
             Platform latihan ujian JLPT untuk semua level. Gratis selamanya.
           </p>
