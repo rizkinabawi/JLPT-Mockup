@@ -12,7 +12,7 @@ export interface Question {
 
 export interface Section {
   section: string;
-  section_name: string;
+  section_name?: string;
   url?: string;
   title?: string;
   total_questions: number;

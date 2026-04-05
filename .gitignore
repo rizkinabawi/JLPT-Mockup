@@ -47,3 +47,10 @@ Thumbs.db
 # Replit
 .cache/
 .local/
+
+# Environment variables — never commit secrets
+.env
+.env.local
+.env.*.local
+# Allow example files
+!.env.vercel.example

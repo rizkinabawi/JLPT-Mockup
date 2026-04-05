@@ -207,7 +207,8 @@ export default function ExamPage({ exams }: ExamPageProps) {
     return parts;
   }
 
-  function getSectionInstruction(sectionName: string, hasMarkers: boolean): string {
+  function getSectionInstruction(sectionName: string | undefined, hasMarkers: boolean): string {
+    if (!sectionName) return 'Pilih jawaban yang paling tepat:';
     const name = sectionName.toLowerCase();
     if (name.includes('membaca kanji') || (name.includes('文字語彙') && !name.includes('pilihan'))) {
       return hasMarkers
@@ -247,7 +248,7 @@ export default function ExamPage({ exams }: ExamPageProps) {
                 {exam.level} — Exam #{exam.exam_number}
               </span>
               <span className="text-xs text-gray-900 dark:text-gray-400 dark:text-white/30 truncate hidden sm:block">
-                {currentSection.section_name}
+                {currentSection.section_name ?? ""}
               </span>
             </div>
             <div className="h-1.5 bg-gray-100 dark:bg-white/5 rounded-full overflow-hidden">
@@ -429,7 +430,7 @@ export default function ExamPage({ exams }: ExamPageProps) {
 
             {exam.sections.map((section, sIdx) => (
               <div key={section.section} className="mb-4">
-                <p className="text-xs text-gray-900 dark:text-gray-400 dark:text-white/30 mb-2 truncate">{section.section_name.split("—")[0].trim()}</p>
+                <p className="text-xs text-gray-900 dark:text-gray-400 dark:text-white/30 mb-2 truncate">{(section.section_name ?? section.section ?? "").split("—")[0].trim()}</p>
                 <div className="flex flex-wrap gap-1.5">
                   {section.questions.map((q, qIdx) => {
                     const key = `${section.section}-${q.number}`;

@@ -11,7 +11,7 @@ const NAMES = [
 ];
 
 const LEVELS = ["N5", "N4", "N3", "N2", "N1"];
-const PASSING_SCORE = { N5: 80, N4: 80, N3: 95, N2: 90, N1: 100 };
+const PASSING_SCORE: Record<string, number> = { N5: 80, N4: 80, N3: 95, N2: 90, N1: 100 };
 const TOTAL_PACKS: Record<string, number> = { N5: 1, N4: 1, N3: 1, N2: 1, N1: 1 };
 
 type BroadcastEvent = {

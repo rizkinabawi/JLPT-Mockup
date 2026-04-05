@@ -76,7 +76,7 @@ export function calculateResults(
 
     return {
       sectionId: section.section,
-      sectionName: section.section_name,
+      sectionName: section.section_name ?? section.section ?? "",
       totalQuestions: section.total_questions,
       correctAnswers: sectionCorrect,
       score: section.total_questions > 0
